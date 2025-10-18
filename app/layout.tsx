@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 import '@/styles/globals.css';
 
@@ -153,6 +154,7 @@ export default function RootLayout({
       </head>
       <body>
         <GoogleAnalytics />
+        <SpeedInsights />
         {children}
       </body>
     </html>
