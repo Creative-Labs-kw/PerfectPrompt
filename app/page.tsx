@@ -145,6 +145,19 @@ export default function HomePage() {
         <div className="container-custom py-8">
           <div className="text-center space-y-4">
             <p className="text-white/90 font-medium">{t.footer.madeIn}</p>
+            <div className="flex flex-col items-center gap-2">
+              <p className="text-white/70 text-sm">
+                {language === 'en' 
+                  ? 'Built by KW.HADES - Creative Labs' 
+                  : 'بناه KW.HADES - Creative Labs'}
+              </p>
+              <a 
+                href="mailto:darkside944@gmail.com" 
+                className="text-secondary hover:text-secondary-hover transition-colors text-sm"
+              >
+                darkside944@gmail.com
+              </a>
+            </div>
             <div className="flex items-center justify-center gap-6 text-sm text-white/60">
               <a href="#privacy" className="hover:text-white transition-colors">
                 {t.footer.links.privacy}
@@ -152,7 +165,7 @@ export default function HomePage() {
               <a href="#terms" className="hover:text-white transition-colors">
                 {t.footer.links.terms}
               </a>
-              <a href="#contact" className="hover:text-white transition-colors">
+              <a href="mailto:darkside944@gmail.com" className="hover:text-white transition-colors">
                 {t.footer.links.contact}
               </a>
             </div>

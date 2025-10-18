@@ -24,9 +24,9 @@ export const metadata: Metadata = {
     'AI Tools Kuwait',
     'Prompt Engineering',
   ],
-  authors: [{ name: 'Perfect Prompt Team', url: siteUrl }],
-  creator: 'Perfect Prompt',
-  publisher: 'Perfect Prompt',
+  authors: [{ name: 'KW.HADES', url: siteUrl }],
+  creator: 'KW.HADES',
+  publisher: 'KW.HADES - Creative Labs',
   verification: {
     google: 'dMRwN9KlpS1CPIuvUz9COZL7w78PMTN7Zyo1jZz6QGQ',
   },
@@ -100,8 +100,9 @@ const jsonLdSchema = {
     priceCurrency: 'USD',
   },
   author: {
-    '@type': 'Organization',
-    name: 'Perfect Prompt',
+    '@type': 'Person',
+    name: 'KW.HADES',
+    email: 'darkside944@gmail.com',
     address: {
       '@type': 'PostalAddress',
       addressCountry: 'Kuwait',
