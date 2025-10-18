@@ -1,0 +1,11 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://perfectprompt.vercel.app/sitemap.xml
+
+# Host
+Host: https://perfectprompt.vercel.app
+
