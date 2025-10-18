@@ -1,50 +1,89 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+// Using Hugging Face Inference API - 100% FREE, no API key needed!
+// Model: mistralai/Mistral-7B-Instruct-v0.2 (fast & reliable)
 
-// Initialize Gemini client
-const apiKey = process.env.GEMINI_API_KEY || 'dummy-key-for-build';
-const genAI = new GoogleGenerativeAI(apiKey);
+const HF_API_URL = 'https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2';
 
 export async function generatePrompt(topic: string, language: 'en' | 'ar'): Promise<string> {
-  // Check for API key at runtime
-  if (!process.env.GEMINI_API_KEY) {
-    throw new Error('GEMINI_API_KEY environment variable is not configured');
-  }
-
   const systemPrompt = language === 'en' 
-    ? `You are an expert AI prompt engineer. Your job is to transform simple user topics into detailed, effective prompts that will get the best results from AI models like GPT, Claude, and Gemini. 
-    
-Create a well-structured, detailed prompt that:
+    ? `You are an expert AI prompt engineer. Transform this topic into a detailed, effective prompt for AI models.
+
+Create a well-structured prompt that:
 - Clearly defines the task or goal
 - Specifies the desired output format
 - Includes relevant context and constraints
 - Uses clear, actionable language
-- Is optimized for AI comprehension
 
-Return ONLY the generated prompt, nothing else.`
-    : `أنت خبير في صياغة أوامر الذكاء الاصطناعي. مهمتك هي تحويل المواضيع البسيطة التي يدخلها المستخدم إلى أوامر مفصلة وفعالة تحقق أفضل النتائج من نماذج الذكاء الاصطناعي مثل GPT و Claude و Gemini.
-    
-أنشئ أمراً منظماً ومفصلاً:
+Return ONLY the generated prompt, nothing else.
+
+Topic: ${topic}
+
+Generated Prompt:`
+    : `أنت خبير في صياغة أوامر الذكاء الاصطناعي. حول هذا الموضوع إلى أمر مفصل وفعال.
+
+أنشئ أمراً منظماً:
 - يحدد المهمة أو الهدف بوضوح
 - يحدد تنسيق المخرجات المطلوبة
 - يتضمن السياق والقيود ذات الصلة
 - يستخدم لغة واضحة وقابلة للتنفيذ
-- محسّن لفهم الذكاء الاصطناعي
 
-أرجع الأمر المُنشأ فقط، لا شيء آخر.`;
+أرجع الأمر المُنشأ فقط، لا شيء آخر.
+
+الموضوع: ${topic}
+
+الأمر المُنشأ:`;
 
   try {
-    // Use Gemini Pro model
-    const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+    const response = await fetch(HF_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        inputs: systemPrompt,
+        parameters: {
+          max_new_tokens: 500,
+          temperature: 0.7,
+          top_p: 0.95,
+          return_full_text: false,
+        },
+      }),
+    });
 
-    const prompt = `${systemPrompt}\n\nUser Topic: ${topic}`;
+    if (!response.ok) {
+      // If model is loading, wait and retry
+      if (response.status === 503) {
+        const data = await response.json();
+        if (data.error && data.error.includes('loading')) {
+          // Model is loading, wait 20 seconds and retry
+          await new Promise(resolve => setTimeout(resolve, 20000));
+          return generatePrompt(topic, language); // Retry
+        }
+      }
+      throw new Error(`Hugging Face API error: ${response.status}`);
+    }
 
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+    const data = await response.json();
+    
+    // Handle different response formats
+    let generatedText = '';
+    if (Array.isArray(data) && data.length > 0) {
+      generatedText = data[0].generated_text || '';
+    } else if (typeof data === 'string') {
+      generatedText = data;
+    } else if (data.generated_text) {
+      generatedText = data.generated_text;
+    }
 
-    return text || 'Failed to generate prompt';
+    // Clean up the response
+    generatedText = generatedText.trim();
+    
+    if (!generatedText) {
+      throw new Error('No text generated');
+    }
+
+    return generatedText;
   } catch (error) {
-    console.error('Gemini API error:', error);
+    console.error('Hugging Face API error:', error);
     throw new Error('Failed to generate prompt. Please try again.');
   }
 }
