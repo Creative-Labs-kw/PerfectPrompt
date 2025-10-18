@@ -8,6 +8,9 @@ import AdSense from '@/components/AdSense';
 import ExamplePrompts from '@/components/ExamplePrompts';
 import { getTranslations, type Language } from '@/lib/translations';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export default function HomePage() {
   const [language, setLanguage] = useState<Language>('en');
   const [result, setResult] = useState('');
