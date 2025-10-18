@@ -27,6 +27,9 @@ export const metadata: Metadata = {
   authors: [{ name: 'Perfect Prompt Team', url: siteUrl }],
   creator: 'Perfect Prompt',
   publisher: 'Perfect Prompt',
+  verification: {
+    google: 'dMRwN9KlpS1CPIuvUz9COZL7w78PMTN7Zyo1jZz6QGQ',
+  },
   formatDetection: {
     email: false,
     address: false,
