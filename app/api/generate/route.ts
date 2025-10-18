@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { generatePrompt } from '@/lib/openai';
+import { generatePrompt } from '@/lib/gemini';
 
 export const runtime = 'nodejs';
 

@@ -24,10 +24,9 @@ export const SUPPORT_EMAIL = 'support@perfectprompt.com';
 export const DEFAULT_TITLE = '⚡ Perfect Prompt | AI Prompt Generator for Creators';
 export const DEFAULT_DESCRIPTION = 'Generate perfect AI prompts instantly in English & Arabic. Kuwait-built free AI prompt generator for GPT, Claude & Gemini.';
 
-// OpenAI
-export const OPENAI_MODEL = 'gpt-3.5-turbo';
-export const OPENAI_MAX_TOKENS = 500;
-export const OPENAI_TEMPERATURE = 0.7;
+// Google Gemini
+export const GEMINI_MODEL = 'gemini-pro';
+export const GEMINI_MAX_TOKENS = 500;
 
 // Limits
 export const MAX_TOPIC_LENGTH = 500;
