@@ -114,6 +114,51 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* How It Works Section */}
+        <section className="max-w-4xl mx-auto space-y-8">
+          <h2 className="text-3xl font-bold text-white text-center">
+            {t.howItWorks.title}
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {t.howItWorks.steps.map((step, index) => (
+              <div key={index} className="card text-center space-y-4">
+                <div className="w-16 h-16 mx-auto bg-gradient-to-br from-secondary to-secondary-hover rounded-full flex items-center justify-center">
+                  <span className="text-3xl font-bold text-white">{step.number}</span>
+                </div>
+                <h3 className="text-xl font-semibold text-white">
+                  {step.title}
+                </h3>
+                <p className="text-white/70 leading-relaxed">{step.description}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="max-w-4xl mx-auto space-y-6">
+          <h2 className="text-3xl font-bold text-white text-center">
+            {t.faq.title}
+          </h2>
+          <div className="space-y-4">
+            {t.faq.items.map((item, index) => (
+              <details key={index} className="card group">
+                <summary className="text-lg font-semibold text-white cursor-pointer list-none flex items-center justify-between">
+                  <span>{item.question}</span>
+                  <svg 
+                    className="w-5 h-5 text-white/70 group-open:rotate-180 transition-transform" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+                <p className="mt-4 text-white/80 leading-relaxed">{item.answer}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+
         {/* SEO Content */}
         <section className="max-w-4xl mx-auto space-y-4 text-white/60 text-sm">
           <h2 className="text-2xl font-bold text-white text-center">
