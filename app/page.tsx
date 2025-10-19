@@ -39,16 +39,11 @@ export default function HomePage() {
       {/* Header */}
       <header className="border-b border-white/10 backdrop-blur-md bg-white/5">
         <div className="container-custom py-4">
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-white">{t.header.title}</h1>
               <p className="text-sm text-white/70">{t.header.subtitle}</p>
             </div>
-            <img 
-              src="/logo.png" 
-              alt="Perfect Prompt Logo" 
-              className="h-12 w-12 object-contain flex-shrink-0"
-            />
             <LangSwitch />
           </div>
         </div>
