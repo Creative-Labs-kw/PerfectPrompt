@@ -57,16 +57,8 @@ export default function HomePage() {
       {/* Main Content - Google Auto Ads will place ads automatically */}
       <main className="container-custom py-12 space-y-8">
         {/* Hero Section */}
-        <section className="text-center space-y-6">
-          {/* Logo in the middle */}
-          <div className="flex justify-center mb-6">
-            <img 
-              src="/logo.png" 
-              alt="Perfect Prompt Logo" 
-              className="h-24 w-24 md:h-32 md:w-32 object-contain animate-fade-in"
-            />
-          </div>
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold gradient-text">
+        <section className="flex items-center justify-center min-h-[60vh]">
+          <h1 className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold gradient-text text-center px-4">
             {t.hero.h1}
           </h1>
         </section>
