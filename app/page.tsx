@@ -5,6 +5,8 @@ import LangSwitch from '@/components/LangSwitch';
 import PromptForm from '@/components/PromptForm';
 import PromptResult from '@/components/PromptResult';
 import AdSense from '@/components/AdSense';
+import InlineAd from '@/components/InlineAd';
+import PremiumBanner from '@/components/PremiumBanner';
 import ExamplePrompts from '@/components/ExamplePrompts';
 import { getTranslations, type Language } from '@/lib/translations';
 
@@ -68,8 +70,8 @@ export default function HomePage() {
           </p>
         </section>
 
-        {/* Top Ad */}
-        <AdSense slot={adSlotTop} position="top" />
+        {/* Top Ad - Banner Style */}
+        <InlineAd position="top" language={language} />
 
         {/* Prompt Form */}
         <section className="max-w-3xl mx-auto space-y-6">
@@ -87,13 +89,20 @@ export default function HomePage() {
           )}
         </section>
 
-        {/* Middle Ad */}
-        {result && <AdSense slot={adSlotMid} position="middle" />}
+        {/* Middle Ad - Show after generating result */}
+        {result && <InlineAd position="middle" language={language} />}
 
         {/* Result */}
         {result && (
           <section className="max-w-3xl mx-auto">
             <PromptResult result={result} t={t} />
+          </section>
+        )}
+
+        {/* Premium Banner - After result */}
+        {result && (
+          <section className="max-w-3xl mx-auto">
+            <PremiumBanner language={language} />
           </section>
         )}
 
@@ -117,8 +126,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Bottom Ad */}
-        <AdSense slot={adSlotBottom} position="bottom" />
+        {/* Bottom Ad - Native Style */}
+        <InlineAd position="bottom" language={language} />
 
         {/* SEO Content */}
         <section className="max-w-4xl mx-auto space-y-4 text-white/60 text-sm">
