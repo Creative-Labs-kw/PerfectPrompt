@@ -46,18 +46,18 @@ export const metadata: Metadata = {
     description: 'Generate perfect AI prompts instantly in English & Arabic. Kuwait-built free AI prompt generator for GPT, Claude & Gemini.',
     images: [
       {
-        url: `${siteUrl}/og-image.png`,
-        width: 1200,
-        height: 630,
+        url: `${siteUrl}/logo.png`,
+        width: 512,
+        height: 512,
         alt: 'Perfect Prompt - AI Prompt Generator',
       },
     ],
   },
   twitter: {
-    card: 'summary_large_image',
+    card: 'summary',
     title: '⚡ Perfect Prompt | AI Prompt Generator',
     description: 'Generate perfect AI prompts instantly in English & Arabic. Free AI prompt generator for GPT, Claude & Gemini.',
-    images: [`${siteUrl}/og-image.png`],
+    images: [`${siteUrl}/logo.png`],
     creator: '@perfectprompt',
   },
   robots: {
@@ -72,9 +72,9 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
-    apple: '/apple-touch-icon.png',
+    icon: '/logo.png',
+    shortcut: '/logo.png',
+    apple: '/logo.png',
   },
   manifest: '/manifest.json',
   alternates: {

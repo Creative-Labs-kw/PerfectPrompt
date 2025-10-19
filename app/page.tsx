@@ -40,9 +40,16 @@ export default function HomePage() {
       <header className="border-b border-white/10 backdrop-blur-md bg-white/5">
         <div className="container-custom py-4">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-white">{t.header.title}</h1>
-              <p className="text-sm text-white/70">{t.header.subtitle}</p>
+            <div className="flex items-center gap-3">
+              <img 
+                src="/logo.png" 
+                alt="Perfect Prompt Logo" 
+                className="h-10 w-10 object-contain"
+              />
+              <div>
+                <h1 className="text-2xl font-bold text-white">{t.header.title}</h1>
+                <p className="text-sm text-white/70">{t.header.subtitle}</p>
+              </div>
             </div>
             <LangSwitch />
           </div>
@@ -52,7 +59,15 @@ export default function HomePage() {
       {/* Main Content - Google Auto Ads will place ads automatically */}
       <main className="container-custom py-12 space-y-8">
         {/* Hero Section */}
-        <section className="text-center space-y-4">
+        <section className="text-center space-y-6">
+          {/* Logo in the middle */}
+          <div className="flex justify-center mb-6">
+            <img 
+              src="/logo.png" 
+              alt="Perfect Prompt Logo" 
+              className="h-24 w-24 md:h-32 md:w-32 object-contain animate-fade-in"
+            />
+          </div>
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold gradient-text">
             {t.hero.h1}
           </h1>
