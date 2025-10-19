@@ -99,13 +99,16 @@ export default function HomePage() {
             <p className="text-white/70 text-sm">
               {t.footer.madeIn}
             </p>
-            <div className="flex items-center justify-center gap-4 text-sm text-white/60">
-              <a href="/privacy" className="hover:text-white transition-colors">
+            <div className="flex items-center justify-center gap-4 text-sm">
+              <a href="/privacy" className="text-white/60 hover:text-white transition-colors">
                 {t.footer.links.privacy}
               </a>
-              <span>•</span>
-              <a href="mailto:darkside944@gmail.com" className="hover:text-white transition-colors">
-                {t.footer.links.contact}
+              <span className="text-white/40">•</span>
+              <a 
+                href="mailto:darkside944@gmail.com" 
+                className="text-secondary hover:text-secondary-hover transition-colors font-medium"
+              >
+                darkside944@gmail.com
               </a>
             </div>
           </div>
