@@ -50,27 +50,17 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* Top Banner Ad */}
-      <AdBanner
-        slot="top-banner"
-        videoUrl="/your-video-ad.mp4"
-        clickUrl="https://your-landing-page.com"
-        title="Special Offer"
-      />
+      {/* Top Banner Ad - Google AdSense */}
+      <AdBanner slot="top-banner" />
 
       {/* Main Content with Sidebar Layout */}
       <main className="py-12">
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
             
-            {/* Left Sidebar - Sticky Ad (Desktop only) */}
+            {/* Left Sidebar - Sticky Ad (Desktop only) - Google AdSense */}
             <aside className="hidden lg:block lg:w-[300px] flex-shrink-0">
-              <AdBanner
-                slot="sidebar-left"
-                videoUrl="/your-video-ad-sidebar.mp4"
-                clickUrl="https://your-landing-page.com"
-                title="Premium Features"
-              />
+              <AdBanner slot="sidebar-left" />
             </aside>
 
             {/* Main Content Area */}
@@ -111,15 +101,8 @@ export default function HomePage() {
                 </section>
               )}
 
-              {/* Inline Video Ad - After Result */}
-              {result && (
-                <AdBanner
-                  slot="inline"
-                  videoUrl="/your-video-ad-inline.mp4"
-                  clickUrl="https://your-landing-page.com"
-                  title="🎉 Special Promotion - Limited Time!"
-                />
-              )}
+              {/* Inline Ad - After Result - Google AdSense */}
+              {result && <AdBanner slot="inline" />}
 
               {/* Premium Banner - After result */}
               {result && (
@@ -213,27 +196,17 @@ export default function HomePage() {
               </section>
             </div>
 
-            {/* Right Sidebar - Sticky Ad (Desktop only) */}
+            {/* Right Sidebar - Sticky Ad (Desktop only) - Google AdSense */}
             <aside className="hidden lg:block lg:w-[300px] flex-shrink-0">
-              <AdBanner
-                slot="sidebar-right"
-                videoUrl="/your-video-ad-sidebar-2.mp4"
-                clickUrl="https://your-landing-page.com"
-                title="Exclusive Offer"
-              />
+              <AdBanner slot="sidebar-right" />
             </aside>
 
           </div>
         </div>
       </main>
 
-      {/* Bottom Banner Ad */}
-      <AdBanner
-        slot="bottom-banner"
-        videoUrl="/your-video-ad-bottom.mp4"
-        clickUrl="https://your-landing-page.com"
-        title="Don't Miss Out"
-      />
+      {/* Bottom Banner Ad - Google AdSense */}
+      <AdBanner slot="bottom-banner" />
 
       {/* Footer */}
       <footer className="border-t border-white/10 backdrop-blur-md bg-white/5 mt-20">
