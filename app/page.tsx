@@ -152,17 +152,14 @@ export default function HomePage() {
                 darkside944@gmail.com
               </a>
             </div>
-            <div className="flex items-center justify-center gap-6 text-sm text-white/60">
-              <a href="#privacy" className="hover:text-white transition-colors">
-                {t.footer.links.privacy}
-              </a>
-              <a href="#terms" className="hover:text-white transition-colors">
-                {t.footer.links.terms}
-              </a>
-              <a href="mailto:darkside944@gmail.com" className="hover:text-white transition-colors">
-                {t.footer.links.contact}
-              </a>
-            </div>
+                <div className="flex items-center justify-center gap-6 text-sm text-white/60">
+                  <a href="/privacy" className="hover:text-white transition-colors">
+                    {t.footer.links.privacy}
+                  </a>
+                  <a href="mailto:darkside944@gmail.com" className="hover:text-white transition-colors">
+                    {t.footer.links.contact}
+                  </a>
+                </div>
             <p className="text-xs text-white/40">
               {language === 'en'
                 ? 'AI Prompt Generator | Best Prompts for GPT, Claude & Gemini | Kuwait AI Tools'
