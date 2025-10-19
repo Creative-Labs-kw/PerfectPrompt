@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { generatePrompt } from '@/lib/gemini';
 
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 
 export async function POST(request: NextRequest) {
   try {
@@ -25,10 +25,11 @@ export async function POST(request: NextRequest) {
     const prompt = await generatePrompt(topic.trim(), language);
 
     return NextResponse.json({ prompt });
-  } catch (error) {
+  } catch (error: any) {
     console.error('API Error:', error);
+    const errorMessage = error?.message || 'Failed to generate prompt. Please try again.';
     return NextResponse.json(
-      { error: 'Failed to generate prompt. Please try again.' },
+      { error: errorMessage, details: error?.toString() },
       { status: 500 }
     );
   }

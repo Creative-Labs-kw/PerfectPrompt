@@ -1,14 +1,16 @@
-// Using GROQ API - 100% FREE & SUPER FAST!
-// Model: llama-3.1-70b-versatile (Best free model available)
-// Get free API key: https://console.groq.com/keys
+// Using OpenAI API - Most Reliable & High Quality!
+// Model: gpt-3.5-turbo (Fast & Affordable)
+// Get API key from: https://platform.openai.com/api-keys
 
-const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
+import OpenAI from 'openai';
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 export async function generatePrompt(topic: string, language: 'en' | 'ar'): Promise<string> {
-  const apiKey = process.env.GROQ_API_KEY;
-  
-  if (!apiKey) {
-    throw new Error('GROQ_API_KEY not configured. Get free key at: https://console.groq.com/keys');
+  if (!process.env.OPENAI_API_KEY) {
+    throw new Error('OPENAI_API_KEY not configured');
   }
 
   const systemMessage = language === 'en' 
@@ -38,44 +40,25 @@ Return ONLY the generated prompt, nothing else. No explanations or preamble.`
     : `حول هذا الموضوع إلى أمر ذكاء اصطناعي عالي الجودة: "${topic}"`;
 
   try {
-    const response = await fetch(GROQ_API_URL, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'llama-3.1-70b-versatile',
-        messages: [
-          { role: 'system', content: systemMessage },
-          { role: 'user', content: userMessage }
-        ],
-        temperature: 0.7,
-        max_tokens: 500,
-        top_p: 0.95,
-      }),
+    const completion = await openai.chat.completions.create({
+      model: 'gpt-3.5-turbo',
+      messages: [
+        { role: 'system', content: systemMessage },
+        { role: 'user', content: userMessage }
+      ],
+      temperature: 0.7,
+      max_tokens: 500,
     });
 
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(`Groq API error: ${response.status} - ${JSON.stringify(errorData)}`);
-    }
-
-    const data = await response.json();
-    
-    if (!data.choices || !data.choices[0] || !data.choices[0].message) {
-      throw new Error('Invalid response format from Groq API');
-    }
-
-    const generatedText = data.choices[0].message.content.trim();
+    const generatedText = completion.choices[0]?.message?.content?.trim();
     
     if (!generatedText) {
-      throw new Error('No text generated');
+      throw new Error('No text generated from OpenAI');
     }
 
     return generatedText;
   } catch (error) {
-    console.error('Groq API error:', error);
+    console.error('OpenAI API error:', error);
     throw new Error(`Failed to generate prompt: ${error instanceof Error ? error.message : 'Unknown error'}`);
   }
 }

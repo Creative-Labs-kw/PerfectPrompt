@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Perfect Prompt - GROQ API Test</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: white;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .subtitle {
+            text-align: center;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+        .test-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .test-title {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        button {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        button:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        button:disabled {
+            background: #6b7280;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: bold;
+            animation: fadeIn 0.3s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .loading { background: #f59e0b; }
+        .success { background: #10b981; }
+        .error { background: #ef4444; }
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(0,0,0,0.3);
+            color: white;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+        }
+        textarea::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+        .timer {
+            text-align: center;
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .stat-box {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #10b981;
+        }
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Perfect Prompt Tester</h1>
+        <p class="subtitle">Testing GROQ API - Lightning Fast AI ⚡</p>
+
+        <!-- Test 1: Quick Health Check -->
+        <div class="test-card">
+            <div class="test-header">
+                <div class="test-title">⚡ Quick Health Check</div>
+                <button onclick="testQuick()" id="btn1">Run Test</button>
+            </div>
+            <div id="status1"></div>
+        </div>
+
+        <!-- Test 2: English Prompt -->
+        <div class="test-card">
+            <div class="test-header">
+                <div class="test-title">🇬🇧 English Prompt Generation</div>
+                <button onclick="testEnglish()" id="btn2">Generate</button>
+            </div>
+            <div id="status2"></div>
+            <textarea id="result2" readonly placeholder="Generated prompt will appear here..."></textarea>
+            <div class="timer" id="timer2"></div>
+        </div>
+
+        <!-- Test 3: Arabic Prompt -->
+        <div class="test-card">
+            <div class="test-header">
+                <div class="test-title">🇸🇦 Arabic Prompt Generation</div>
+                <button onclick="testArabic()" id="btn3">توليد</button>
+            </div>
+            <div id="status3"></div>
+            <textarea id="result3" readonly placeholder="سيظهر الأمر المُنشأ هنا..." dir="rtl"></textarea>
+            <div class="timer" id="timer3"></div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-value" id="successCount">0</div>
+                <div class="stat-label">Successful Tests</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="avgTime">-</div>
+                <div class="stat-label">Avg Response Time</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="status">🟡</div>
+                <div class="stat-label">API Status</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'https://perfect-prompt-seven.vercel.app/api/generate';
+        let successCount = 0;
+        let responseTimes = [];
+
+        function updateStats() {
+            document.getElementById('successCount').textContent = successCount;
+            if (responseTimes.length > 0) {
+                const avg = responseTimes.reduce((a, b) => a + b, 0) / responseTimes.length;
+                document.getElementById('avgTime').textContent = avg.toFixed(2) + 's';
+            }
+            document.getElementById('status').textContent = successCount > 0 ? '🟢' : '🔴';
+        }
+
+        async function testQuick() {
+            const statusDiv = document.getElementById('status1');
+            const btn = document.getElementById('btn1');
+            btn.disabled = true;
+            
+            statusDiv.innerHTML = '<div class="status loading">⏳ Testing connection...</div>';
+            
+            const startTime = Date.now();
+            
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ topic: 'test prompt', language: 'en' })
+                });
+                
+                const responseTime = ((Date.now() - startTime) / 1000).toFixed(2);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    statusDiv.innerHTML = `<div class="status success">✅ API is ONLINE! Response time: ${responseTime}s</div>`;
+                    successCount++;
+                    responseTimes.push(parseFloat(responseTime));
+                    updateStats();
+                } else {
+                    const error = await response.text();
+                    statusDiv.innerHTML = `<div class="status error">❌ Error ${response.status}: ${error}</div>`;
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `<div class="status error">❌ Connection failed: ${error.message}</div>`;
+            }
+            
+            btn.disabled = false;
+        }
+
+        async function testEnglish() {
+            const statusDiv = document.getElementById('status2');
+            const resultArea = document.getElementById('result2');
+            const timerDiv = document.getElementById('timer2');
+            const btn = document.getElementById('btn2');
+            btn.disabled = true;
+            
+            statusDiv.innerHTML = '<div class="status loading">⏳ Generating English prompt with GROQ AI...</div>';
+            resultArea.value = '';
+            timerDiv.textContent = '';
+            
+            const startTime = Date.now();
+            
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        topic: 'Write a comprehensive guide about artificial intelligence in healthcare',
+                        language: 'en'
+                    })
+                });
+                
+                const responseTime = ((Date.now() - startTime) / 1000).toFixed(2);
+                const data = await response.json();
+                
+                if (response.ok && data.prompt) {
+                    statusDiv.innerHTML = `<div class="status success">✅ Generated successfully in ${responseTime}s! (GROQ is FAST! ⚡)</div>`;
+                    resultArea.value = data.prompt;
+                    timerDiv.textContent = `⚡ Generated ${data.prompt.length} characters in ${responseTime} seconds`;
+                    successCount++;
+                    responseTimes.push(parseFloat(responseTime));
+                    updateStats();
+                } else {
+                    statusDiv.innerHTML = `<div class="status error">❌ Error: ${data.error || 'Unknown error'}</div>`;
+                    resultArea.value = JSON.stringify(data, null, 2);
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `<div class="status error">❌ Failed: ${error.message}</div>`;
+            }
+            
+            btn.disabled = false;
+        }
+
+        async function testArabic() {
+            const statusDiv = document.getElementById('status3');
+            const resultArea = document.getElementById('result3');
+            const timerDiv = document.getElementById('timer3');
+            const btn = document.getElementById('btn3');
+            btn.disabled = true;
+            
+            statusDiv.innerHTML = '<div class="status loading">⏳ توليد أمر عربي باستخدام GROQ AI...</div>';
+            resultArea.value = '';
+            timerDiv.textContent = '';
+            
+            const startTime = Date.now();
+            
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        topic: 'اكتب دليلاً شاملاً عن الذكاء الاصطناعي في التعليم',
+                        language: 'ar'
+                    })
+                });
+                
+                const responseTime = ((Date.now() - startTime) / 1000).toFixed(2);
+                const data = await response.json();
+                
+                if (response.ok && data.prompt) {
+                    statusDiv.innerHTML = `<div class="status success">✅ تم التوليد بنجاح في ${responseTime}s! (GROQ سريع جداً! ⚡)</div>`;
+                    resultArea.value = data.prompt;
+                    timerDiv.textContent = `⚡ تم توليد ${data.prompt.length} حرف في ${responseTime} ثانية`;
+                    successCount++;
+                    responseTimes.push(parseFloat(responseTime));
+                    updateStats();
+                } else {
+                    statusDiv.innerHTML = `<div class="status error">❌ خطأ: ${data.error || 'خطأ غير معروف'}</div>`;
+                    resultArea.value = JSON.stringify(data, null, 2);
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `<div class="status error">❌ فشل: ${error.message}</div>`;
+            }
+            
+            btn.disabled = false;
+        }
+    </script>
+</body>
+</html>
+
