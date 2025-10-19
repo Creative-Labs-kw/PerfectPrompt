@@ -142,14 +142,19 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }}
         />
 
-        {/* Google AdSense */}
-        {adsenseClient && (
+        {/* Google AdSense - Auto Ads (Google places ads automatically) */}
+        {adsenseClient ? (
           <Script
             async
             src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`}
             crossOrigin="anonymous"
             strategy="afterInteractive"
           />
+        ) : (
+          // Placeholder script for when AdSense is not configured
+          <Script id="adsense-placeholder" strategy="afterInteractive">
+            {`console.log('AdSense not configured. Add NEXT_PUBLIC_ADSENSE_CLIENT to enable ads.');`}
+          </Script>
         )}
       </head>
       <body>

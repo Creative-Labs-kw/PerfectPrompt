@@ -4,8 +4,6 @@ import { useEffect, useState } from 'react';
 import LangSwitch from '@/components/LangSwitch';
 import PromptForm from '@/components/PromptForm';
 import PromptResult from '@/components/PromptResult';
-import AdSense from '@/components/AdSense';
-import InlineAd from '@/components/InlineAd';
 import PremiumBanner from '@/components/PremiumBanner';
 import ExamplePrompts from '@/components/ExamplePrompts';
 import { getTranslations, type Language } from '@/lib/translations';
@@ -36,10 +34,6 @@ export default function HomePage() {
 
   const t = getTranslations(language);
 
-  const adSlotTop = process.env.NEXT_PUBLIC_ADSENSE_SLOT_TOP || '';
-  const adSlotMid = process.env.NEXT_PUBLIC_ADSENSE_SLOT_MID || '';
-  const adSlotBottom = process.env.NEXT_PUBLIC_ADSENSE_SLOT_BOTTOM || '';
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-dark via-primary to-primary-dark">
       {/* Header */}
@@ -55,7 +49,7 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* Main Content */}
+      {/* Main Content - Google AdSense will automatically insert ads */}
       <main className="container-custom py-12 space-y-8">
         {/* Hero Section */}
         <section className="text-center space-y-4">
@@ -69,9 +63,6 @@ export default function HomePage() {
             {t.hero.description}
           </p>
         </section>
-
-        {/* Top Ad - Banner Style */}
-        <InlineAd position="top" language={language} />
 
         {/* Prompt Form */}
         <section className="max-w-3xl mx-auto space-y-6">
@@ -88,9 +79,6 @@ export default function HomePage() {
             </div>
           )}
         </section>
-
-        {/* Middle Ad - Show after generating result */}
-        {result && <InlineAd position="middle" language={language} />}
 
         {/* Result */}
         {result && (
@@ -125,9 +113,6 @@ export default function HomePage() {
             ))}
           </div>
         </section>
-
-        {/* Bottom Ad - Native Style */}
-        <InlineAd position="bottom" language={language} />
 
         {/* SEO Content */}
         <section className="max-w-4xl mx-auto space-y-4 text-white/60 text-sm">
