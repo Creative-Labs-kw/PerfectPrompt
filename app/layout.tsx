@@ -136,6 +136,9 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://api.openai.com" />
         
+        {/* Google AdSense Verification Meta Tag */}
+        <meta name="google-adsense-account" content="ca-pub-5743354209147744" />
+        
         {/* JSON-LD Schema */}
         <script
           type="application/ld+json"
