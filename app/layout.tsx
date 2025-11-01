@@ -126,8 +126,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
-
   return (
     <html lang="en" dir="ltr">
       <head>
@@ -145,20 +143,8 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }}
         />
 
-        {/* Google AdSense - Auto Ads (Google places ads automatically) */}
-        {adsenseClient ? (
-          <Script
-            async
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`}
-            crossOrigin="anonymous"
-            strategy="afterInteractive"
-          />
-        ) : (
-          // Placeholder script for when AdSense is not configured
-          <Script id="adsense-placeholder" strategy="afterInteractive">
-            {`console.log('AdSense not configured. Add NEXT_PUBLIC_ADSENSE_CLIENT to enable ads.');`}
-          </Script>
-        )}
+        {/* Google AdSense script is now included only on pages with sufficient content */}
+        {/* See components/AdSenseScript.tsx - included in page.tsx and privacy/page.tsx */}
       </head>
       <body>
         <GoogleAnalytics />

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Script from 'next/script';
 
 const siteUrl = process.env.SITE_URL || 'https://perfect-prompt-seven.vercel.app';
 
@@ -12,8 +13,20 @@ export const metadata: Metadata = {
 };
 
 export default function PrivacyPage() {
+  const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-dark via-primary to-primary-dark">
+    <>
+      {/* AdSense Script - Only on pages with sufficient content */}
+      {adsenseClient && (
+        <Script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`}
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+      )}
+      <div className="min-h-screen bg-gradient-to-br from-primary-dark via-primary to-primary-dark">
       {/* Header */}
       <header className="border-b border-white/10 backdrop-blur-md bg-white/5">
         <div className="container-custom py-4">
@@ -268,7 +281,8 @@ export default function PrivacyPage() {
           </div>
         </div>
       </footer>
-    </div>
+      </div>
+    </>
   );
 }
 

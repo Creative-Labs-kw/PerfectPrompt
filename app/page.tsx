@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Script from 'next/script';
 import LangSwitch from '@/components/LangSwitch';
 import PromptForm from '@/components/PromptForm';
 import PromptResult from '@/components/PromptResult';
@@ -34,9 +35,21 @@ export default function HomePage() {
 
   const t = getTranslations(language);
 
+  const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-dark via-primary to-primary-dark">
-      {/* Header */}
+    <>
+      {/* AdSense Script - Only on pages with sufficient content */}
+      {adsenseClient && (
+        <Script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`}
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+      )}
+      <div className="min-h-screen bg-gradient-to-br from-primary-dark via-primary to-primary-dark">
+        {/* Header */}
       <header className="border-b border-white/10 backdrop-blur-md bg-white/5">
         <div className="container-custom py-4">
           <div className="flex items-center justify-between">
@@ -49,7 +62,7 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* Main Content - Google Auto Ads will place ads automatically */}
+      {/* Main Content */}
       <main className="container-custom py-12 space-y-8">
         {/* Hero Section */}
         <section className="text-center space-y-6">
@@ -122,7 +135,8 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
-    </div>
+      </div>
+    </>
   );
 }
 
